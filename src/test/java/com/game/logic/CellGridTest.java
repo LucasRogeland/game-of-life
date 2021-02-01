@@ -75,12 +75,16 @@ class CellGridTest {
 	@Test
 	void neighboringCellsBoundsCheck() {
 		final CellGrid grid = new CellGrid();
-		final Cell lastCell = grid.getCell(DEFAULT_COLUMNS - 1, DEFAULT_ROWS - 1);
-		final List<Cell> neighborsEnd = grid.getNeighboringCells(lastCell);
-		Cell firstCell = grid.getCell(DEFAULT_COLUMNS - 1, DEFAULT_ROWS - 1);
-		final List<Cell> neighborsStart = grid.getNeighboringCells(firstCell);
+		final List<Cell> neighborsEnd = grid.getNeighboringCells(DEFAULT_COLUMNS - 1, DEFAULT_ROWS - 1);
+		final List<Cell> neighborsStart = grid.getNeighboringCells(DEFAULT_COLUMNS - 1, DEFAULT_ROWS - 1);
 		assertEquals(3, neighborsEnd.size());
 		assertEquals(3, neighborsStart.size());
+	}
+	
+	@Test 
+	void getCellNegativeInputThrowsIndexOutOfBounds() {
+		final CellGrid grid = new CellGrid();
+		assertThrows(IndexOutOfBoundsException.class, () -> grid.getCell(-1, -1));
 	}
 	
 }

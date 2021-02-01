@@ -16,7 +16,8 @@ public class CellGrid {
 	}
 	
 	public CellGrid(int columns, int rows) {
-		if (columns < 0 || rows < 0) throw new IllegalArgumentException("Columns and rows must be positive");
+		if (columns < 1) columns = DEFAULT_COLUMNS;
+		if (rows < 1) rows = DEFAULT_ROWS;
 		this.columns  = columns;
 		this.rows = rows;
 		fillDefault();
@@ -35,11 +36,12 @@ public class CellGrid {
 	}
 	
 	public Cell getCell(int column, int row) {
+		guardPosition(column, row);
 		return cells.get(column + (row * columns));
 	}
 	
 	public void addRows(int addition) {
-		if (addition < 0) throw new IllegalArgumentException("Must be positive");
+		if (addition < 0) return;
 		for(int rowsAdded = 0; rowsAdded < addition; rowsAdded++) {
 			for (int column = 0; column < columns; column ++) {
 				cells.add(new Cell());				
@@ -49,30 +51,25 @@ public class CellGrid {
 	}
 	
 	public void addColumns(int addition) {
-		if (addition < 0) throw new IllegalArgumentException("Must be positive");
+		if (addition < 0) return;
 		for (int row = 0; row < rows; row++) {
 			for (int columnsAdded = 0; columnsAdded < addition; columnsAdded++) {
-				cells.add(columns * row + columnsAdded, new Cell());
+				cells.add(columns + row * columns + columnsAdded, new Cell());
 			}
 		}
 		columns += addition;
 	}
 	
-	public int getLivingNeighbors(Cell cell) {
-		return (int) getNeighboringCells(cell)
+	public int getLivingNeighbors(int column, int row) {
+		return (int) getNeighboringCells(column, row)
 				.stream()
 				.filter(neighbor -> neighbor.getIsAlive())
 				.count();
 	}
 	
-	public List<Cell> getNeighboringCells(Cell cell) {
-		if (cell == null) throw new NullPointerException("cell was null");
-		final int index = cells.indexOf(cell);
-		if (index == -1) throw new IllegalArgumentException("cell index not found");
-		
+	public List<Cell> getNeighboringCells(int column, int row) {
+		guardPosition(column, row);
 		final List<Cell> neighbors = new ArrayList<Cell>();
-		final int column = index % columns;
-		final int row = index / columns;
 		
 		final boolean isFirstRow = row == 0;
 		final boolean isLastRow = row == rows - 1;
@@ -89,6 +86,10 @@ public class CellGrid {
 		if (!isLastRow && !isLastColumn) neighbors.add(getCell(column + 1, row + 1));
 
 		return neighbors;
+	}
+	
+	private void guardPosition(int column, int row) {
+		if (column < 0 || row < 0 || columns > columns || row > rows) throw new IndexOutOfBoundsException();
 	}
 	
 	private void fillDefault() {

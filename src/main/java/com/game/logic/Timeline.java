@@ -21,7 +21,7 @@ public class Timeline {
 			for (int column = 0; column < grid.getColumns(); column++) {
 				final Cell cell = grid.getCell(column, row);
 				final Cell nextCell = nextGrid.getCell(column, row);
-				final int livingNeighbors = grid.getLivingNeighbors(cell);
+				final int livingNeighbors = grid.getLivingNeighbors(column, row);
 				if (livingNeighbors == 3 || (livingNeighbors == 2 && cell.getIsAlive())) nextCell.setIsAlive(true);
 			}
 		}

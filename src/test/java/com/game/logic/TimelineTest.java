@@ -16,7 +16,7 @@ class TimelineTest {
 	
 	@Test
 	void initializePreDefinedGrid() {
-		CellGrid grid = Template.build("""
+		CellGrid grid = CellGridTemplate.build("""
 				-XX-
 				---X
 				""");
@@ -38,7 +38,7 @@ class TimelineTest {
 	
 	@Test 
 	void nextUpdatesGridWithNewGeneration() {
-		CellGrid grid = Template.build("""
+		CellGrid grid = CellGridTemplate.build("""
 				-XXX
 				----
 				""");

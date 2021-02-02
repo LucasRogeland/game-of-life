@@ -8,7 +8,7 @@ class TemplateTest {
 
 	@Test
 	void createsGridFromTemplateString() {
-		final CellGrid grid = Template.build("""
+		final CellGrid grid = CellGridTemplate.build("""
 				--X--
 				--X--
 				-X---

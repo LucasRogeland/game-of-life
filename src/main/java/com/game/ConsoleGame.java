@@ -3,7 +3,7 @@ package com.game;
 import java.util.concurrent.TimeUnit;
 
 import com.game.logic.CellGrid;
-import com.game.logic.Template;
+import com.game.logic.CellGridTemplate;
 import com.game.logic.Timeline;
 import com.game.render.ConsoleRenderer;
 import com.game.render.Renderer;
@@ -16,7 +16,7 @@ public class ConsoleGame implements Game {
 	private Timeline timeline;
 	
 	public ConsoleGame() {
-		CellGrid startingGrid = Template.build(Template.START);
+		CellGrid startingGrid = CellGridTemplate.build(CellGridTemplate.START);
 		timeline = new Timeline(startingGrid);
 		renderer = new ConsoleRenderer();
 	}

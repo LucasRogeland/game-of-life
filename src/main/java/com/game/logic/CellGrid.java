@@ -20,7 +20,7 @@ public class CellGrid {
 		if (rows < 1) rows = DEFAULT_ROWS;
 		this.columns  = columns;
 		this.rows = rows;
-		fillDefault();
+		fillDefaultCells();
 	}
 	
 	public int getColumns() {
@@ -36,7 +36,7 @@ public class CellGrid {
 	}
 	
 	public Cell getCell(int column, int row) {
-		guardPosition(column, row);
+		validateIsWithinBounds(column, row);
 		return cells.get(column + (row * columns));
 	}
 	
@@ -60,7 +60,7 @@ public class CellGrid {
 		columns += addition;
 	}
 	
-	public int getLivingNeighbors(int column, int row) {
+	public int getLivingNeighborsCount(int column, int row) {
 		return (int) getNeighboringCells(column, row)
 				.stream()
 				.filter(neighbor -> neighbor.getIsAlive())
@@ -68,7 +68,7 @@ public class CellGrid {
 	}
 	
 	public List<Cell> getNeighboringCells(int column, int row) {
-		guardPosition(column, row);
+		validateIsWithinBounds(column, row);
 		final List<Cell> neighbors = new ArrayList<Cell>();
 		
 		final boolean isFirstRow = row == 0;
@@ -88,11 +88,11 @@ public class CellGrid {
 		return neighbors;
 	}
 	
-	private void guardPosition(int column, int row) {
+	private void validateIsWithinBounds(int column, int row) {
 		if (column < 0 || row < 0 || columns > columns || row > rows) throw new IndexOutOfBoundsException();
 	}
 	
-	private void fillDefault() {
+	private void fillDefaultCells() {
 		final int size = columns * rows;
 		cells = new ArrayList<Cell>(size);
 		for (int i = 0; i < size; i++) {

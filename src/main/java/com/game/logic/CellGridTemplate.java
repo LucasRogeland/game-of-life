@@ -1,6 +1,6 @@
 package com.game.logic;
 
-public class Template {
+public class CellGridTemplate {
 
 	public static final String START = """
 			------------------------------

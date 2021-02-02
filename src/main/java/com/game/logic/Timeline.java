@@ -22,7 +22,7 @@ public class Timeline {
 				final Cell cell = grid.getCell(column, row);
 				final Cell nextCell = nextGrid.getCell(column, row);
 				final int livingNeighbors = grid.getLivingNeighborsCount(column, row);
-				if (livingNeighbors == 3 || (livingNeighbors == 2 && cell.getIsAlive())) nextCell.setIsAlive(true);
+				if (isNextCellAlive(cell, livingNeighbors)) nextCell.setIsAlive(true);
 			}
 		}
 		grid = nextGrid;
@@ -34,5 +34,9 @@ public class Timeline {
 	
 	public CellGrid getGrid() {
 		return grid;
+	}
+	
+	private boolean isNextCellAlive(Cell currentCell, int livingNeighbors) {
+		return livingNeighbors == 3 || (livingNeighbors == 2 && currentCell.getIsAlive());
 	}
 }
